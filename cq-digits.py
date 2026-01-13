@@ -1,6 +1,6 @@
 """
 CadQuery version of digits generator.
-Creates 3x3 grid of boxes with labels.
+Creates 3x3 grid of boxes with text labels.
 """
 
 from cadquery import Workplane, Color
@@ -16,19 +16,21 @@ fn = "out/cq-digits"
 
 
 def digit(num: int | str) -> cq.Assembly:
-    """Create a single digit tile with base and text bump."""
+    """Create a single digit tile with recessed text on top surface."""
     num_str = str(num)
 
-    # Base part: main box 
+    # Base part: main box
     base = Workplane("XY").box(w, b, h).edges("|Z").fillet(1.5)
     
-    # Text part: visible black bump on top of base
-    # Position it at z = h/2 + 0.3 to sit on top of the base
-    text_part = (
-        Workplane("XY")
-        .transformed(offset=cq.Vector(0, 0, h/2 + 0.3))
-        .box(8, 8, 0.6)
-    )
+    # Get top face and create workplane on it
+    top_face = base.faces(">Z").first()
+    
+    # Create text sketch and cut indent into base (pocket)
+    base = base.cut(Workplane("XY").moveTo(0, 0).text(num_str, fontsize=8, distance=0).extrude(-0.6))
+    
+    # Create black text part - same shape, positioned to sit IN the pocket
+    text_part = Workplane("XY").moveTo(0, 0).text(num_str, fontsize=8, distance=0).extrude(-0.55)
+    text_part = text_part.translate((0, 0, h/2))
     
     # Combine as assembly
     asm = cq.Assembly()
