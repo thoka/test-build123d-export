@@ -12,16 +12,16 @@ The newest compatible version is 3.13. 3.12 also works. 3.14 and 3.15 are curren
 
 ### Export feature matrix (latest run)
 
-Run: /home/toka/dv/build123d/.venv/bin/python test-digits.py  
-Date: 2026-01-13T17:09:31
+Run: /home/toka/dv/build123d/.venv/bin/python test-digity.py  
+Date: 2026-01-13T17:12:38
 
 Generated the digits exports and inspected them for hierarchy names and colors.
 
-Format  | File    | root  | child   | text  | box  | colors
------------------------------------------------------------
-step    | ok      | yes   | yes     | -     | -    | -
-stl     | ok      | -     | -       | -     | -    | -
-3mf     | ok      | -     | -       | -     | -    | -
-bin     | ok      | -     | -       | -     | -    | -
-brep    | ok      | -     | -       | -     | -    | -
-gltf    | ok      | -     | -       | -     | -    | -
+| Format  | File    | root  | child   | text  | box  | colors |
+|:-------|:-------|:-----|:--------|:-----|:----|:-------|
+| step    | ok      | yes   | yes     | -     | -    | - |
+| stl     | ok      | -     | -       | -     | -    | - |
+| 3mf     | ok      | -     | -       | -     | -    | - |
+| bin     | ok      | -     | -       | -     | -    | - |
+| brep    | ok      | -     | -       | -     | -    | - |
+| gltf    | ok      | -     | -       | -     | -    | - |
