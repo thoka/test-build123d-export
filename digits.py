@@ -3,12 +3,12 @@ from build123d import *
 w,b, h = tile_dim = (20, 20, 2)
 d = 1
 
-white = Color("White") 
-black = Color("Black")
+white = Color( (0.990901,0.990902,0.990903) ) 
+black = Color( (0.010101,0.010102,0.010103) )
 
 fn = "out/digits"
 
-def card(digit: int|str) -> Compound:
+def digit(digit: int|str) -> Compound:
     digit = str(digit)
     
     # Base part
@@ -33,7 +33,7 @@ def card(digit: int|str) -> Compound:
 
 digits = Compound(
     label="dIgItS",
-    children = [ Location(( (w+d) * (i % 3), (b+d) * (i // 3) ,0)) * card(i+1) for i in range(0,9)]
+    children = [ Location(( (w+d) * (i % 3), (b+d) * (i // 3) ,0)) * digit(i+1) for i in range(0,9)]
 )
 
 export_step(digits,f"{fn}.step")
@@ -48,4 +48,7 @@ exporter.write(f"{fn}.stl")
 
 from ocp_vscode import show, show_all
 show_all()
+
+
+
 
