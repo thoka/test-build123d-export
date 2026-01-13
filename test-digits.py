@@ -36,9 +36,8 @@ from typing import Iterable
 # Paths and constants
 ROOT = Path(__file__).resolve().parent
 OUT = ROOT / "out"
-RESULTS = ROOT / "current-test-results.md"
 README = ROOT / "readme.md"
-SECTION_TITLE = "### Export feature matrix (latest run)"
+SECTION_TITLE = "### build123d export feature matrix (latest run)"
 BASE_NAME = "digits"
 EXPECTED = {
   "step": OUT / f"{BASE_NAME}.step",
@@ -57,7 +56,14 @@ NAME_GROUPS = {
 }
 ALL_NAMES = tuple(name for names in NAME_GROUPS.values() for name in names)
 
-COLORS = [ "0.0101","0.9909" ]
+COLORS = [
+  "0.010101",
+  "0.010102",
+  "0.010103",
+  "0.990901",
+  "0.990902",
+  "0.990903",
+]
 
 
 def run_digits() -> None:
@@ -184,10 +190,11 @@ def format_matrix(matrix: dict[str, dict[str, list[str] | bool]]) -> str:
   """Return the matrix as a formatted string table."""
 
   header = (
-    f"{'Format':<7} | {'File':<7} | {'root':<5} | {'child':<7} | "
-    f"{'text':<5} | {'box':<4} | colors"
+    f"| {'Format':<7} | {'File':<7} | {'root':<5} | {'child':<7} | "
+    f"{'text':<5} | {'box':<4} | colors |"
   )
-  lines = [header, "-" * len(header)]
+  align = "|:-------|:-------|:-----|:--------|:-----|:----|:-------|"
+  lines = [header, align]
   for fmt, info in matrix.items():
     present = "ok" if info["present"] else "missing"
     root = "yes" if info["root"] else "-"
@@ -196,35 +203,17 @@ def format_matrix(matrix: dict[str, dict[str, list[str] | bool]]) -> str:
     box = "yes" if info["box"] else "-"
     colors = "yes" if info["colors"] else "-"
     lines.append(
-      f"{fmt:<7} | {present:<7} | {root:<5} | {child:<7} | "
-      f"{text:<5} | {box:<4} | {colors}"
+      f"| {fmt:<7} | {present:<7} | {root:<5} | {child:<7} | "
+      f"{text:<5} | {box:<4} | {colors} |"
     )
   return "\n".join(lines)
 
 
 def write_results(matrix: dict[str, dict[str, list[str] | bool]]) -> None:
-  """Persist the latest test run to a markdown file."""
+  """Update README with the latest matrix results."""
 
   timestamp = datetime.now().isoformat(timespec="seconds")
   run_cmd = f"{sys.executable} {Path(__file__).name}"
-  lines = [
-    "Current Test Results",
-    "====================",
-    "",
-    f"Run: {run_cmd}",
-    f"Date: {timestamp}",
-    "",
-    "Summary",
-    "-------",
-    "Generated the digits exports and inspected them for hierarchy names and colors.",
-    "",
-    "Feature Matrix",
-    "--------------",
-    "```",
-    format_matrix(matrix),
-    "```",
-  ]
-  RESULTS.write_text("\n".join(lines))
   update_readme(matrix, timestamp, run_cmd)
 
 

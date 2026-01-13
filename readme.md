@@ -10,10 +10,10 @@ Trying out the CAD-as-code tool build123d.
 ### Supported Python versions
 The newest compatible version is 3.13. 3.12 also works. 3.14 and 3.15 are currently not supported.
 
-### Export feature matrix (latest run)
+### build123d export feature matrix (latest run)
 
-Run: /home/toka/dv/build123d/.venv/bin/python test-digity.py  
-Date: 2026-01-13T17:12:38
+Run: /home/toka/dv/build123d/.venv/bin/python test-digits.py  
+Date: 2026-01-13T17:32:16
 
 Generated the digits exports and inspected them for hierarchy names and colors.
 
@@ -25,3 +25,15 @@ Generated the digits exports and inspected them for hierarchy names and colors.
 | bin     | ok      | -     | -       | -     | -    | - |
 | brep    | ok      | -     | -       | -     | -    | - |
 | gltf    | ok      | -     | -       | -     | -    | - |
+
+### CadQuery export feature matrix (latest run)
+
+Run: /home/toka/dv/build123d/.venv/bin/python cq-test-digits.py  
+Date: 2026-01-13T17:32:16
+
+Generated the digits exports and inspected them for hierarchy names and colors.
+
+| Format  | File    | root  | child   | text  | box  | colors |
+|:-------|:-------|:-----|:--------|:-----|:----|:-------|
+| step    | ok      | yes   | yes     | yes   | yes  | yes |
+| stl     | ok      | -     | -       | -     | -    | - |
