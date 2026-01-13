@@ -239,9 +239,7 @@ def render_readme_section(matrix: dict[str, dict[str, list[str] | bool]], timest
     "",
     "Generated the digits exports and inspected them for hierarchy names and colors.",
     "",
-    "```",
     format_matrix(matrix),
-    "```",
     "",
   ]
   return "\n".join(parts)
