@@ -25,10 +25,14 @@ def digit(num: int | str) -> cq.Assembly:
     # Get top face and create workplane on it
     top_face = base.faces(">Z").first()
     
-    # Create text sketch and cut indent into base (pocket)
-    base = base.cut(Workplane("XY").moveTo(0, 0).text(num_str, fontsize=8, distance=0).extrude(-0.6))
+    # Create text sketch positioned at top surface for cutting
+    text_cut = Workplane("XY").moveTo(0, 0).text(num_str, fontsize=8, distance=0).extrude(-0.6)
+    text_cut = text_cut.translate((0, 0, h/2))
     
-    # Create black text part - same shape, positioned to sit IN the pocket
+    # Cut the pocket into the base
+    base = base.cut(text_cut)
+    
+    # Create black text part - same shape, positioned in the pocket
     text_part = Workplane("XY").moveTo(0, 0).text(num_str, fontsize=8, distance=0).extrude(-0.55)
     text_part = text_part.translate((0, 0, h/2))
     
